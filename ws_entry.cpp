@@ -1,53 +1,53 @@
 #include "ws_entry.h"
 
-// 输入无后缀，输出后缀_out
-
 namespace wintersun
 {
 
-EntryAbstract::EntryAbstract() {
+EntryAbstract::EntryAbstract() { }
+
+EntryAbstract::EntryAbstract(const QString &str_1, const QString &str_2) :
+    writing_(str_1), definitions_(str_2) { }
+
+EntryAbstract::~EntryAbstract() { }
+
+// ================================
+
+QString EntryAbstract::Getter(const int index) const{
+    if (index == 0)
+        return writing_;
+    if (index < 0 || definitions_.size() < index)
+        throw "WS_ENTRY Getter(int): Element Index Negative Or Too Large";
+    return definitions_[index - 1];
 }
 
-EntryAbstract::EntryAbstract(const QString& str_1, const QString& str_2) :
-	writing_(str_1), meaning_(str_2) {
+void EntryAbstract::Setter(const int index, const QString &str) {
+    if (index == 0)
+        writing_ = str;
+    else if (definitions_.size() < index)
+        definitions_.push_back(str);
+    else if (0 < index && index <= definitions_.size())
+        definitions_.insert(definitions_.constBegin() + index - 1, str);
+    else if (-definitions_.size() <= index && index < 0)
+        definitions_.erase(definitions_.constBegin() - index - 1);
+    else
+        throw "WS_ENTRY Setter(int): Element Index Too Small Negative Number";
 }
 
-EntryAbstract::~EntryAbstract() {
+int EntryAbstract::Size() {
+    return definitions_.size() + 1;
 }
 
-Result EntryAbstract::Getter(const int element, QString& str_out) const{
-	switch (element) {
-	case 0:
-		str_out = writing_;
-		return Result();
-	case 1:
-		str_out = meaning_;
-		return Result();
-	default:
-		return Result("Invalid element");
-	}
-}
+// ================================
 
-Result EntryAbstract::Setter(const int element, const QString& str) {
-	switch (element) {
-	case 0:
-		writing_ = str;
-		return Result();
-	case 1:
-		meaning_ = str;
-		return Result();
-	default:
-		return Result("Invalid element");
-	}
-}
-
-bool EntryAbstract::operator==(const EntryAbstract& entry) {
+bool EntryAbstract::operator==(const EntryAbstract &entry) {
 	if (writing_ != entry.writing_)
-		return false;
-	if (meaning_ != entry.meaning_)
-		return false;
+        return false;
+    if (definitions_ != entry.definitions_)
+        return false;
 
 	return true;
 }
+
+/******************************************************************/
 
 } // namespace wintersun

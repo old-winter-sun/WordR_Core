@@ -15,8 +15,8 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(WINTER_SUN
-        ws_error.h
-        ws_error.cpp
+        ws_return.h
+        ws_return.cpp
         ws_entry.h
         ws_entry.cpp
         ws_dictionary.h

@@ -1,34 +1,32 @@
 #ifndef WS_ENTRY_H_
 #define WS_ENTRY_H_
 
-// 头文件仅输出有变量名带后缀_out，且位于函数参数末尾
-
-// Qt的代码后面换成Boost的
-
 #include <QString>
-#include "ws_error.h"
+#include <QVector>
 
 namespace wintersun
 {
 
-class EntryAbstract
-{
+class EntryAbstract {
 public:
-	static const int kMaxElementNum = 2;
-
 	EntryAbstract();
-    EntryAbstract(const QString&, const QString&);
+    EntryAbstract(const QString &, const QString &);
 	virtual ~EntryAbstract();
 
-    virtual Result Getter(const int, QString& str_out) const;
-    virtual Result Setter(const int, const QString&);
+    // 获取修改等 从 1 开始
+    virtual QString Getter(const int) const;
+    virtual void    Setter(const int, const QString &);  // 正索增引加或修改，负索引删除
+    virtual int     Size();                             // 返回大小(元素个数)
 
-	bool operator==(const EntryAbstract&);
+    // 运算符
+    bool operator==(const EntryAbstract &);
 
 private:
     QString writing_;
-    QString meaning_;
+    QVector<QString> definitions_;
 };
+
+//class EntryStandardEN : public EntryAbstract
 
 } // namespace wintersun
 

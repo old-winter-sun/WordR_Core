@@ -6,31 +6,111 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>900</width>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableView" name="dict_view">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>50</y>
-      <width>256</width>
-      <height>192</height>
-     </rect>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
     </property>
-   </widget>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayoutL">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLineEdit" name="lineedit_find"/>
+      </item>
+      <item>
+       <widget class="QTableView" name="tableview_dict">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::NoPen</enum>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushbutton_add">
+        <property name="text">
+         <string>添加</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayoutR">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutR_top">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutR_topL">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushbutton_save">
+            <property name="text">
+             <string>保存</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushbutton_edit">
+            <property name="text">
+             <string>编辑</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushbutton_delete">
+          <property name="text">
+           <string>删除</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="textedit_entry">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>900</width>
      <height>25</height>
     </rect>
    </property>
@@ -43,7 +123,6 @@
    </widget>
    <addaction name="menu_file"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
    <property name="text">
     <string>打开</string>
