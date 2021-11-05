@@ -19,7 +19,7 @@ public:
     virtual void         Add(const EntryAbstract &);
     virtual void         Delete(const int);
     virtual void         Revise(const int, const EntryAbstract &); // 以后添加正则表达式
-    virtual QVector<int> Search(const EntryAbstract &);            // 目前全匹配查找entry_in里非空元素
+    virtual QVector<int> Search(const QString &);                  // 查找相同拼写
 
     // 操作
     virtual int           Size();             // 词条个数

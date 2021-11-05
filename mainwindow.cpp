@@ -48,6 +48,22 @@ void MainWindow::on_action_save_triggered() {
 
 // ================================
 
+void MainWindow::on_lineedit_find_editingFinished() {
+    if(ui->lineedit_find->text() == "") {
+        refreshTableviewDict();
+        return;
+    }
+
+    QVector<int> vec_tmp = dict.Search(ui->lineedit_find->text());
+    model_dict->clear();
+
+    for (int i = 0; i < vec_tmp.size(); i++) {
+        model_dict->setItem(i, 0, new QStandardItem(dict.Display(vec_tmp[i]).Getter(0)));
+    }
+
+    ui->tableview_dict->setModel(model_dict);
+}
+
 void MainWindow::on_tableview_dict_clicked(const QModelIndex &index) {
     try {
         showInTextedit(index.row());
@@ -58,7 +74,7 @@ void MainWindow::on_tableview_dict_clicked(const QModelIndex &index) {
 
 // ================================
 
-void MainWindow::on_pushbutton_edit_clicked() {
+void MainWindow::on_pushbutton_edit_clicked() { // 词条最少一个元素，编辑时两行（textedit编辑时自动添行）
     setChange(true);
 }
 
@@ -106,6 +122,8 @@ void MainWindow::refreshTableviewDict() {
 }
 
 void MainWindow::showInTextedit(const int &row) {
+    setChange(false);
+
     QString str_tmp("");
     last_entry_num = row;
 

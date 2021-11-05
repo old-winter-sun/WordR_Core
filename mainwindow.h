@@ -22,14 +22,14 @@ private slots:
     void on_action_open_triggered();
     void on_action_save_triggered();
 
-    // 主界面
+    // 主界面 - 词典
+    void on_lineedit_find_editingFinished();
     void on_tableview_dict_clicked(const QModelIndex &index);
 
-    // 主界面 - 编辑保存删除添加
+    // 主界面 - 词条
     void on_pushbutton_edit_clicked();
     void on_pushbutton_save_clicked();
     void on_pushbutton_delete_clicked();
-
     void on_pushbutton_add_clicked();
 
 private:

@@ -31,10 +31,10 @@ void DictionaryAbstract::Revise(const int index, const EntryAbstract &entry) {
 	entries_[index] = entry;
 }
 
-QVector<int> DictionaryAbstract::Search(const EntryAbstract &entry) {
+QVector<int> DictionaryAbstract::Search(const QString &str) {
     QVector<int> vec_index;
 	for (int i = 0; i < entries_.size(); i++) {
-        if (entries_[i] == entry)
+        if (entries_[i].Getter(0) == str)
             vec_index.push_back(i);
 	}
     return vec_index;

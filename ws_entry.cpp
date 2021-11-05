@@ -37,17 +37,6 @@ int EntryAbstract::Size() {
     return definitions_.size() + 1;
 }
 
-// ================================
-
-bool EntryAbstract::operator==(const EntryAbstract &entry) {
-	if (writing_ != entry.writing_)
-        return false;
-    if (definitions_ != entry.definitions_)
-        return false;
-
-	return true;
-}
-
 /******************************************************************/
 
 } // namespace wintersun
