@@ -9,21 +9,18 @@ namespace wintersun
 
 class EntryAbstract {
 public:
-	EntryAbstract();
-    EntryAbstract(const QString &, const QString &);
-	virtual ~EntryAbstract();
+    inline EntryAbstract() { };
+    inline virtual ~EntryAbstract() { };
 
-    // 获取；修改；大小 0 为书写，1 为含义
-    virtual QString Getter(const int) const;
-    virtual void    Setter(const int, const QString &); // 正索增引加或修改，负索引删除
-    virtual int     Size();                             // 返回大小(元素个数)
+    // 索引：0 - writing_ ; 1 ~ n - meanings_
+    virtual QString Getter(const int) const;            // 获取
+    virtual void    Setter(const int, const QString &); // 修改
+    virtual int     Size();                             // 大小
 
 private:
-    QString writing_;
-    QVector<QString> definitions_;
+    QString writing_;           // 书写
+    QVector<QString> meanings_; // 含义
 };
-
-//class EntryStandardEN : public EntryAbstract
 
 } // namespace wintersun
 

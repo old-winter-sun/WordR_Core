@@ -2,18 +2,17 @@
 
 #include <QFile>
 #include <QTextStream>
-
-#include <QDebug>
+#include <QPointer>
 
 namespace wintersun {
 
-const QString DictionaryAbstract::kSplitText = "<br>";
+const QString DictionaryAbstract::kSplitEntry = QChar(0x1D);
 
 DictionaryAbstract::DictionaryAbstract() { }
 
 DictionaryAbstract::~DictionaryAbstract() { }
 
-// ================================
+// 操作：================================
 
 void DictionaryAbstract::Add(const EntryAbstract &entry) {
 	entries_.push_back(entry);
@@ -31,6 +30,7 @@ void DictionaryAbstract::Revise(const int index, const EntryAbstract &entry) {
 	entries_[index] = entry;
 }
 
+// 按拼写查找
 QVector<int> DictionaryAbstract::Search(const QString &str) {
     QVector<int> vec_index;
 	for (int i = 0; i < entries_.size(); i++) {
@@ -40,7 +40,7 @@ QVector<int> DictionaryAbstract::Search(const QString &str) {
     return vec_index;
 }
 
-// ================================
+// 信息：================================
 
 int DictionaryAbstract::Size() {
     return entries_.size();
@@ -52,27 +52,22 @@ EntryAbstract DictionaryAbstract::Display(const int index) {
     return entries_[index];
 }
 
-// ================================
+// 文件流：================================
 
 void DictionaryAbstract::SaveToFile(const QString &str_path) {
     QFile file(str_path);
 
-    QString str_set;
     QString str_tmp;
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         throw "WS_DICTIONARY: Open File Failed";
 
     for (int n = 0; n < entries_.size(); n++) {
-        str_set = "";
-
-        for (int i = 0; i < entries_[n].Size(); i++) { // 末尾带分隔符
-            str_tmp = entries_[n].Getter(i);
-            str_set += str_tmp + kSplitText;
+        for (int i = 0; i < entries_[n].Size(); i++) {
+            str_tmp = entries_[n].Getter(i) + "\n";
+            file.write(str_tmp.toUtf8());
         }
-        str_set += "\n";
-
-        file.write(str_set.toUtf8());
+        file.write((kSplitEntry + "\n").toUtf8());
     }
 
     file.close();
@@ -84,26 +79,23 @@ void DictionaryAbstract::ReadFromFile(const QString &str_path) {
     QFile file(str_path);
 
     QString str_get;
-    EntryAbstract* entry;
+    QScopedPointer<EntryAbstract> entry_tmp(new EntryAbstract);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         throw "WS_DICTIONARY: Open File Failed";
 
     QTextStream stream_get(&file);
 
-    while (!stream_get.atEnd()) {
+    for (int i = 0; !stream_get.atEnd(); i++) {
         str_get = stream_get.readLine();
-        QStringList str_list = str_get.split(kSplitText);
-        entry = new EntryAbstract();
 
-        if (str_get.size() != 0) {
-            for (int i = 0; i < str_list.size() - 1; i++) { // 分割后有\n换行符
-                entry->Setter(i, str_list[i]);
-            }
-
-            entries_.push_back(*entry);
-            delete entry;
+        if (str_get == kSplitEntry) {
+            i = -1;
+            entries_.push_back(*entry_tmp);
+            entry_tmp.reset(new EntryAbstract);
         }
+        else
+            entry_tmp->Setter(i, str_get);
     }
 
 	file.close();

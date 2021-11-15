@@ -3,40 +3,32 @@
 namespace wintersun
 {
 
-EntryAbstract::EntryAbstract() { }
-
-EntryAbstract::EntryAbstract(const QString &str_1, const QString &str_2) :
-    writing_(str_1), definitions_(str_2) { }
-
-EntryAbstract::~EntryAbstract() { }
-
-// ================================
-
+// 0 拼写；1 ~ n 含义
 QString EntryAbstract::Getter(const int index) const{
     if (index == 0)
         return writing_;
-    if (index < 0 || definitions_.size() < index)
+    if (index < 0 || meanings_.size() < index)
         throw "WS_ENTRY Getter(int): Element Index Negative Or Too Large";
-    return definitions_[index - 1];
+    return meanings_[index - 1];
 }
 
+// 正索引：新增或修改，负索引：删除
 void EntryAbstract::Setter(const int index, const QString &str) {
     if (index == 0)
         writing_ = str;
-    else if (definitions_.size() < index)
-        definitions_.push_back(str);
-    else if (0 < index && index <= definitions_.size())
-        definitions_.insert(definitions_.constBegin() + index - 1, str);
-    else if (-definitions_.size() <= index && index < 0)
-        definitions_.erase(definitions_.constBegin() - index - 1);
+    else if (meanings_.size() < index)
+        meanings_.push_back(str);
+    else if (0 < index && index <= meanings_.size())
+        meanings_.insert(meanings_.constBegin() + index - 1, str);
+    else if (-meanings_.size() <= index && index < 0)
+        meanings_.erase(meanings_.constBegin() - index - 1);
     else
         throw "WS_ENTRY Setter(int): Element Index Too Small Negative Number";
 }
 
+// 最小为 1，仅含writing_
 int EntryAbstract::Size() {
-    return definitions_.size() + 1;
+    return meanings_.size() + 1;
 }
-
-/******************************************************************/
 
 } // namespace wintersun

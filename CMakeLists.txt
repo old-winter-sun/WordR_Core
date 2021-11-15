@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(WordR VERSION 0.1 LANGUAGES CXX)
+project(WordR_Core VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
