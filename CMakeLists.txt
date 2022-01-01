@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+# 无法构建Qt6静态库，似乎是Qt6编译选项的问题：https://bugreports.qt.io/browse/QTBUG-87480
+# 动态链接打包
 project(WordR_Core VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

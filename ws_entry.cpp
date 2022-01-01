@@ -3,32 +3,65 @@
 namespace wintersun
 {
 
-// 0 拼写；1 ~ n 含义
-QString EntryAbstract::Getter(const int index) const{
-    if (index == 0)
+// 自由词条
+// 0 书写；1 ~ n 装饰
+
+const QString EntryFree::kEntryType = 0; // 自由词条标识符 = 整数 0
+
+// ================================
+
+QString EntryFree::Get(const int i) const {
+    if (i == 0)
         return writing_;
-    if (index < 0 || meanings_.size() < index)
-        throw "WS_ENTRY Getter(int): Element Index Negative Or Too Large";
-    return meanings_[index - 1];
+    else if (0 < i && i <= decorations_.size())
+        return decorations_[i - 1];
+    else
+        throw "wintersun: QString EntryFree::Get(const int) const：输入的元素索引过大或为负";
 }
 
-// 正索引：新增或修改，负索引：删除
-void EntryAbstract::Setter(const int index, const QString &str) {
-    if (index == 0)
-        writing_ = str;
-    else if (meanings_.size() < index)
-        meanings_.push_back(str);
-    else if (0 < index && index <= meanings_.size())
-        meanings_.insert(meanings_.constBegin() + index - 1, str);
-    else if (-meanings_.size() <= index && index < 0)
-        meanings_.erase(meanings_.constBegin() - index - 1);
+void EntryFree::Add(const QString& str) {
+    decorations_.push_back(str);
+}
+
+void EntryFree::Delete(const int i) {
+    if (i == 0)
+        throw "wintersun: void EntryFree::Delete(const int)：不能删除词语书写";
+    else if (0 < i && i <= decorations_.size())
+        decorations_.erase(decorations_.constBegin() + i - 1);
     else
-        throw "WS_ENTRY Setter(int): Element Index Too Small Negative Number";
+        throw "wintersun: void EntryFree::Delete(const int)：输入的元素索引过大或为负";
+}
+
+void EntryFree::Set(const int i, const QString& str) {
+    if (i == 0)
+        writing_ = str;
+    else if (0 < i && i <= decorations_.size())
+        decorations_[i - 1] = str;
+    else
+        throw "wintersun: void EntryFree::Set(const int, const QString&)：输入的元素索引过大或为负";
+}
+
+// ================================
+
+// 返回首个匹配元素的索引，-1 代表没有
+int EntryFree::Match(const QString& str) const {
+    if (writing_.indexOf(str) != -1)
+        return 0;
+    else
+        for(int n = 0; n < decorations_.size(); n++) {
+            if(decorations_[n].indexOf(str) != -1)
+                return n + 1;
+        }
+    return -1;
 }
 
 // 最小为 1，仅含writing_
-int EntryAbstract::Size() {
-    return meanings_.size() + 1;
+int EntryFree::Size() const {
+    return decorations_.size() + 1;
+}
+
+QString EntryFree::Type() const {
+    return kEntryType;
 }
 
 } // namespace wintersun

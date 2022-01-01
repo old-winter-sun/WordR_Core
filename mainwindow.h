@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    wintersun::DictionaryAbstract dict;
+    wintersun::DictionaryBase dict;
     QStandardItemModel *model_dict;
 
     int last_entry_num;
