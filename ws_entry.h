@@ -1,11 +1,10 @@
-#ifndef WS_ENTRY_H_
-#define WS_ENTRY_H_
+#ifndef WS_ENTRY_H
+#define WS_ENTRY_H
 
 #include <QString>
 #include <QVector>
 
-namespace wintersun
-{
+namespace wintersun {
 
 // 抽象词条
 // 将所有成员变量看作元素，按照先后顺序用数字索引
@@ -53,4 +52,4 @@ private:
 
 } // namespace wintersun
 
-#endif // !WS_ENTRY_H_
+#endif // !WS_ENTRY_H

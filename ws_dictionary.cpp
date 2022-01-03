@@ -2,17 +2,13 @@
 
 #include <QFile>
 #include <QTextStream>
-#include <QPointer>
 
 namespace wintersun {
 
 // 基本字典
-// 对词条索引
-
 const QString DictionaryBase::kSplitEntry = QChar(0x1D); // 单个词条标识符 = ASCII分组符
 
 // 操作：================================
-
 void DictionaryBase::Add(QSharedPointer<EntryAbstract>& p_entry) {
     p_entries_.push_back(p_entry);
 }
@@ -40,7 +36,6 @@ QVector<int> DictionaryBase::Search(const QString& str) {
 }
 
 // 信息：================================
-
 int DictionaryBase::Size() {
     return p_entries_.size();
 }
@@ -52,7 +47,6 @@ const EntryAbstract& DictionaryBase::Display(const int i) {
 }
 
 // 文件流：================================
-
 void DictionaryBase::SaveToFile(const QString& str_path) {
     QFile file(str_path);
 

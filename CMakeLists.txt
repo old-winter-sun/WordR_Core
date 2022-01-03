@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-# 无法构建Qt6静态库，似乎是Qt6编译选项的问题：https://bugreports.qt.io/browse/QTBUG-87480
-# 动态链接打包
 project(WordR_Core VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -15,21 +13,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Network REQUIRED)
 
 set(WINTER_SUN
-        ws_standard.h
-        ws_standard.cpp
-        ws_entry.h
-        ws_entry.cpp
-        ws_dictionary.h
-        ws_dictionary.cpp
+        ws_standard.h   ws_standard.cpp
+        ws_entry.h      ws_entry.cpp
+        ws_dictionary.h ws_dictionary.cpp
 )
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
         mainwindow.h
-        mainwindow.ui
+        mainwindow.cpp mainwindow.ui
+        mainserver.cpp
 
         ${WINTER_SUN}
 )
@@ -57,7 +53,9 @@ else()
     endif()
 endif()
 
-target_link_libraries(WordR PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(WordR PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt6::Network)
 
 set_target_properties(WordR PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

@@ -1,5 +1,5 @@
-#ifndef WS_RETURN_H_
-#define WS_RETURN_H_
+#ifndef WS_RETURN_H
+#define WS_RETURN_H
 
 // sz = char[]型数组字符串；str = string类字符串
 // 输入 i = index；遍历 n = number
@@ -19,9 +19,13 @@
 // 算法，内存布局等以后优化...
 // 为了简洁所有构造函数为空，工厂方法初始化
 
-namespace wintersun
-{
+// Qt用#if条件编译会与MOC冲突，请使用#ifdef
+// 讨论：https://development.qt-project.narkive.com/pyhHs8Vz/moc-4-8-6-macros
+
+// 是否空行适当调整，并不统一要求空一行或者不空
+
+namespace wintersun {
 
 } // namespace wintersun
 
-#endif // !WS_RETURN_H_
+#endif // !WS_RETURN_H

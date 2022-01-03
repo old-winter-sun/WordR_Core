@@ -1,15 +1,12 @@
 #include "ws_entry.h"
 
-namespace wintersun
-{
+namespace wintersun {
 
 // 自由词条
 // 0 书写；1 ~ n 装饰
-
 const QString EntryFree::kEntryType = 0; // 自由词条标识符 = 整数 0
 
 // ================================
-
 QString EntryFree::Get(const int i) const {
     if (i == 0)
         return writing_;
@@ -42,7 +39,6 @@ void EntryFree::Set(const int i, const QString& str) {
 }
 
 // ================================
-
 // 返回首个匹配元素的索引，-1 代表没有
 int EntryFree::Match(const QString& str) const {
     if (writing_.indexOf(str) != -1)

@@ -1,8 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+//#define BE_QTWINAPPLICATION // 添加编译为Qt桌面应用
+
 #include <QMainWindow>
 #include <QStandardItem>
+#include <QTcpServer>
+#include <QTcpSocket>
+
 #include "ws_dictionary.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,33 +22,56 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+// 基础成员
+private:
+    wintersun::DictionaryBase dict_;
+    QStandardItemModel* model_dict_;
+
+signals:
+    void OpenDictFile(); // 打开词典
+    void SaveDictFile(); // 保存词典
+
+#ifdef BE_QTWINAPPLICATION
+// Qt桌面应用
+private:
+    // Qt桌面应用 - ui文件
+    Ui::MainWindow *ui;
+
+    int last_entry_num_;
+    bool is_change_;
+
+    // Qt桌面应用 - 辅助函数
+    void RefreshTableviewDict();      // 显示词典
+    void ShowInTextedit(const int &); // 显示词条
+    void SetChange(const bool &);     // 能否修改
+    void SaveChange();                // 保存修改
+
 private slots:
-    // 主菜单 - 文件
+    // Qt桌面应用 - 文件
     void on_action_open_triggered();
     void on_action_save_triggered();
 
-    // 主界面 - 词典
+    // Qt桌面应用 - 词典
     void on_lineedit_find_editingFinished();
     void on_tableview_dict_clicked(const QModelIndex &index);
 
-    // 主界面 - 词条
+    // Qt桌面应用 - 词条
     void on_pushbutton_edit_clicked();
     void on_pushbutton_save_clicked();
     void on_pushbutton_delete_clicked();
     void on_pushbutton_add_clicked();
 
+#else
+// WordR后端
 private:
-    Ui::MainWindow *ui;
+    QTcpServer* p_server_;
+    QTcpSocket* p_socket_;
 
-    wintersun::DictionaryBase dict;
-    QStandardItemModel *model_dict;
+private slots:
+    void newConnect();
+    void readData();
 
-    int last_entry_num;
-    bool is_change;
-
-    void refreshTableviewDict();      // 显示词典
-    void showInTextedit(const int &); // 显示词条
-    void setChange(const bool &);     // 能否修改
-    void saveChange();                // 保存修改
+#endif
 };
+
 #endif // MAINWINDOW_H

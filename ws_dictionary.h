@@ -1,13 +1,12 @@
-#ifndef WS_DICTIONARY_H_
-#define WS_DICTIONARY_H_
+#ifndef WS_DICTIONARY_H
+#define WS_DICTIONARY_H
 
 #include <QSharedPointer>
 #include <QString>
 #include <QVector>
 #include "ws_entry.h"
 
-namespace wintersun
-{
+namespace wintersun {
 
 //constexpr std::streamsize kMaxReadSize = 1024;
 
@@ -39,4 +38,4 @@ private:
 
 } // namespace wintersun
 
-#endif // !WS_DICTIONARY_H_
+#endif // !WS_DICTIONARY_H
