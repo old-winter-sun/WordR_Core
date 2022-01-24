@@ -38,4 +38,4 @@ private:
 
 } // namespace wintersun
 
-#endif // !WS_DICTIONARY_H
+#endif // WS_DICTIONARY_H

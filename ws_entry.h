@@ -52,4 +52,4 @@ private:
 
 } // namespace wintersun
 
-#endif // !WS_ENTRY_H
+#endif // WS_ENTRY_H

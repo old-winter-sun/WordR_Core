@@ -23,9 +23,11 @@ set(WINTER_SUN
 
 set(PROJECT_SOURCES
         main.cpp
+
         mainwindow.h
-        mainwindow.cpp mainwindow.ui
-        mainserver.cpp
+        mainwindow.ui
+
+        mainwindow.cpp mainserver.cpp
 
         ${WINTER_SUN}
 )

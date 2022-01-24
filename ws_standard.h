@@ -28,4 +28,4 @@ namespace wintersun {
 
 } // namespace wintersun
 
-#endif // !WS_RETURN_H
+#endif // WS_RETURN_H

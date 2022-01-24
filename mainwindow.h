@@ -1,14 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-//#define BE_QTWINAPPLICATION // 添加编译为Qt桌面应用
-
 #include <QMainWindow>
 #include <QStandardItem>
 #include <QTcpServer>
 #include <QTcpSocket>
 
+#include "maincompileswitch.h"
 #include "ws_dictionary.h"
+
+#define BE_QTWINAPPLICATION // 添加编译为Qt桌面应用
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,19 +23,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-// 基础成员
+// 基础
 private:
     wintersun::DictionaryBase dict_;
-    QStandardItemModel* model_dict_;
+    QString str_path;
 
-signals:
-    void OpenDictFile(); // 打开词典
-    void SaveDictFile(); // 保存词典
+    QStandardItemModel* model_dict_;
 
 #ifdef BE_QTWINAPPLICATION
 // Qt桌面应用
 private:
-    // Qt桌面应用 - ui文件
     Ui::MainWindow *ui;
 
     int last_entry_num_;

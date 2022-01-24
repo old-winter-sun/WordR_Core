@@ -45,7 +45,7 @@ void MainWindow::readData() { // 后续优化
     QString client_str;
     client_str.prepend(client_bytes);
 
-    if(client_str == "open")
+//    if(client_str == "open")
 //        else if
 
 }

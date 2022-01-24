@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <QFileDialog>
+
 #ifdef BE_QTWINAPPLICATION
 
 // Qt桌面应用
@@ -11,13 +13,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Qt桌面应用 - 初始化
+    // 初始化
     model_dict_ = new QStandardItemModel();
 
     ui->pushbutton_save->setVisible(false);
     ui->pushbutton_add->setVisible(false);
 
     ui->lineedit_find->setFixedHeight(ui->pushbutton_edit->sizeHint().height());
+
+    // 连接信号和槽函数
 }
 
 MainWindow::~MainWindow()
@@ -27,7 +31,7 @@ MainWindow::~MainWindow()
     delete model_dict_;
 }
 
-// Qt桌面应用 - 辅助函数：================================
+// 辅助函数：================================
 void MainWindow::RefreshTableviewDict() {
     model_dict_->clear();
 
@@ -85,10 +89,11 @@ void MainWindow::SaveChange() {
     ShowInTextedit(last_entry_num_);
 }
 
-// Qt桌面应用 - 文件：================================
+// 文件：================================
 void MainWindow::on_action_open_triggered() {
     try {
-        dict_.ReadFromFile("D://Repository/_OLD/Qt/TestFile/SourceDev.md");
+        str_path = QFileDialog::getOpenFileName(this, "open", "D:/_Repository/_OLD/Qt/TestFile/");
+        dict_.ReadFromFile(str_path);
 
         last_entry_num_ = -1;
         is_change_ = false;
@@ -102,13 +107,13 @@ void MainWindow::on_action_open_triggered() {
 
 void MainWindow::on_action_save_triggered() {
     try {
-        dict_.SaveToFile("D://Repository/_OLD/Qt/TestFile/SourceDev.md");
+        dict_.SaveToFile(str_path);
     } catch (const char *sz) {
         qDebug() << sz;
     }
 }
 
-// Qt桌面应用 - 词典：================================
+// 词典：================================
 void MainWindow::on_lineedit_find_editingFinished() {
     if(ui->lineedit_find->text() == "") {
         RefreshTableviewDict();
@@ -133,7 +138,7 @@ void MainWindow::on_tableview_dict_clicked(const QModelIndex &index) {
     }
 }
 
-// Qt桌面应用 - 词条：================================
+// 词条：================================
 void MainWindow::on_pushbutton_edit_clicked() { // 词条最少一个元素，编辑时两行（textedit编辑时自动添行）
     SetChange(true);
 }
