@@ -6,7 +6,6 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 
-#include "maincompileswitch.h"
 #include "ws_dictionary.h"
 
 #define BE_QTWINAPPLICATION // 添加编译为Qt桌面应用
